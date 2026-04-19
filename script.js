@@ -1,3 +1,4 @@
+// Using Google Gemini API for AI-based food suggestions
 document.addEventListener('DOMContentLoaded', () => {
     // --- Login System Logic ---
     const loginScreen = document.getElementById('login-screen');
