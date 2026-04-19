@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodLoop AI</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Dark glassmorphism background elements -->
+    <div class="background-elements">
+        <!-- Canvas: animated abstract lines -->
+        <canvas id="bg-canvas"></canvas>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="glass-card login-card">
+            <div class="section-header" style="margin-bottom: 2rem;">
+                <h1 class="logo" style="margin-bottom: 1rem;">FoodLoop</h1>
+                <h2>Welcome</h2>
+                <p>Enter your details to continue</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="user-name">Full Name</label>
+                    <input type="text" id="user-name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email Address</label>
+                    <input type="email" id="user-email" required placeholder="john@example.com">
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 1rem;">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="main-app" style="display: none;">
+    <!-- Top Navbar -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <h1 class="logo">FoodLoop</h1>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-target="customer-section">Customer</button>
+                <button class="tab-btn" data-target="donor-section">Donor</button>
+                <button class="tab-btn" data-target="ngo-section">NGO</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container">
+        
+        <!-- Customer Section -->
+        <section id="customer-section" class="role-section active">
+            <div class="section-header">
+                <h2>Customer Dashboard</h2>
+                <p>Find surplus food or get AI recipe ideas!</p>
+            </div>
+            
+            <!-- AI Recipe Section -->
+            <div class="glass-panel" style="margin-bottom: 2rem;">
+                <div class="panel-header">
+                    <h3>AI Recipe Idea Generator <span style="font-size: 1.25rem;">✨</span></h3>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <input type="text" id="ai-ingredients" placeholder="What ingredients do you have? (e.g. rice, beans, chicken)" style="width: 100%; padding: 0.8rem 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-main); font-size: 1rem; transition: border-color 0.3s;">
+                    </div>
+                    <button id="ai-generate-btn" class="btn-primary" style="width: auto; padding: 0.8rem 1.5rem;">Generate Ideas</button>
+                </div>
+                <!-- AI Output box -->
+                <div id="ai-output" style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(139, 92, 246, 0.1); border-left: 4px solid var(--primary-color); border-radius: 0 8px 8px 0; display: none;">
+                    <h4 style="margin-bottom: 0.5rem; color: #c4b5fd;">Generated Ideas:</h4>
+                    <p id="ai-output-text" style="color: var(--text-main); line-height: 1.6;"></p>
+                </div>
+            </div>
+
+            <!-- Food Browsing Section -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <h3>Available Surplus Food</h3>
+                <div style="position: relative; flex: 1; max-width: 300px;">
+                    <input type="text" id="food-search" placeholder="Search available food..." style="width: 100%; padding: 0.6rem 1rem 0.6rem 2.5rem; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 99px; color: var(--text-main); font-size: 0.95rem;">
+                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+                </div>
+            </div>
+
+            <div class="card-grid" id="customer-donations-grid">
+                <!-- Customer items will go here -->
+            </div>
+        </section>
+
+        <!-- Donor Section -->
+        <section id="donor-section" class="role-section">
+            <div class="section-header">
+                <h2>Donor Dashboard</h2>
+                <p>List your surplus food and connect with NGOs & customers.</p>
+            </div>
+            <div class="glass-panel" style="margin-bottom: 2rem;">
+                <div class="panel-header">
+                    <h3>Add New Food Listing</h3>
+                </div>
+                <form id="donation-form" class="donation-form">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="food-name">Food Name</label>
+                        <input type="text" id="food-name" required placeholder="e.g. 20x Sandwiches">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="food-qty">Quantity</label>
+                        <input type="text" id="food-qty" required placeholder="e.g. 5 kg">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="food-loc">Location</label>
+                        <input type="text" id="food-loc" required placeholder="e.g. Downtown Bakery">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="food-category">Category</label>
+                        <select id="food-category" required>
+                            <option value="" disabled selected>Select type...</option>
+                            <option value="Nearby Expiry Food">Nearby Expiry Food</option>
+                            <option value="Event Leftover Food">Event Leftover Food</option>
+                            <option value="Restaurant Surplus Food">Restaurant Surplus Food</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary form-btn">Add</button>
+                </form>
+            </div>
+            
+            <div class="panel-header" style="max-width: 800px; margin: 0 auto 1.25rem auto;">
+                <h3>Your Active Listings</h3>
+                <div class="filter-pills" id="donor-filter-pills">
+                    <button class="filter-pill active" data-cat="all">All</button>
+                    <button class="filter-pill" data-cat="Nearby Expiry Food">Expiry</button>
+                    <button class="filter-pill" data-cat="Event Leftover Food">Leftover</button>
+                    <button class="filter-pill" data-cat="Restaurant Surplus Food">Surplus</button>
+                </div>
+            </div>
+            <div id="donations-container" class="card-grid">
+                <!-- Donation items will be rendered here -->
+            </div>
+        </section>
+
+        <!-- NGO Section -->
+        <section id="ngo-section" class="role-section">
+            <div class="section-header">
+                <h2>NGO Dashboard</h2>
+                <p>Find available food donations and coordinate pickups.</p>
+            </div>
+            <div class="card-grid" id="ngo-donations-grid">
+                <!-- NGO items will be rendered here -->
+            </div>
+        </section>
+
+    </main>
+    </div>
+
+    <!-- Bottom Sliding Confirmation Panel -->
+    <div id="status-panel" class="status-panel" style="user-select: none;">
+        <div class="status-content">
+            <h3 id="request-status-text">Request Sent Successfully</h3>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <button id="close-status-btn" class="btn-outline" style="margin-top: 1rem; width: 100%;">Dismiss</button>
+        </div>
+    </div>
+
+    <script src="bg-canvas.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
